@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fisagrop.conferenceTrackManagement.domain.Track;
 import com.fisagrop.conferenceTrackManagement.service.TrackManagement;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +31,6 @@ public class TrackManagementTests {
 	private List<String> proposals;
 	
 	private TrackManagement trackManagement;
-	private List<Track> trucks;	
 	
 	@BeforeEach
 	public void beforeAll() {
@@ -44,7 +42,6 @@ public class TrackManagementTests {
 	public void afterAll() {
 		this.proposals = null;
 		this.trackManagement = null;
-		this.trucks = null;
 	}
 	
 	@Test
@@ -56,10 +53,10 @@ public class TrackManagementTests {
 	public void testCreatedTruckManagement() {
 		this.givenTruckManagementWithProposals();
 		this.givenTrucks();
-		
+		System.out.println(this.trackManagement.getTrucks());
 		assertNotNull(this.trackManagement);
-		assertNotNull(this.trucks);
-		assertFalse(this.trucks.isEmpty());
+		assertNotNull(this.trackManagement.getTrucks());
+		assertFalse(this.trackManagement.getTrucks().isEmpty());
 	}
 	
 	private void givenTruckManagementWithProposals() {
@@ -67,6 +64,8 @@ public class TrackManagementTests {
 	}
 	
 	private void givenTrucks() {
-		this.trucks = this.trackManagement.getTrucks();
+		while(this.trackManagement.canCreateTrack()) {
+			this.trackManagement.createTrack();
+		}
 	}
 }

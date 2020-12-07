@@ -1,5 +1,6 @@
 package com.fisagrop.conferenceTrackManagement.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +18,12 @@ public class TalkManagement {
 	}
 
 	private void generateTalks() {
-		this.talks = this.proposals.parallelStream()
+		this.talks = this.proposals.stream()
 					.map(proposal -> createTalk(proposal))
 					.collect(Collectors.toList());
+		this.talks.sort(Comparator
+						.comparing(Talk::getDuration)
+						.reversed());
 	}
 	
 	private Talk createTalk(String proposal) {
@@ -29,5 +33,24 @@ public class TalkManagement {
 	
 	public List<Talk> givenTalks() {
 		return this.talks;
+	}
+	
+	public void removeTalks(List<Talk> talks) {
+		this.talks = this.talks.
+						stream()
+						.filter(talk -> !talks.contains(talk))
+						.collect(Collectors.toList());
+	}
+	
+	public boolean existAvailableTalks() {
+		return !this.talks.isEmpty();
+	}
+
+	public Talk giveNetworkingEvent() {
+		return new Talk(0L, "Networking Event");
+	}
+
+	public Talk giveLunch() {
+		return new Talk(60L, "Lunch");
 	}
 }

@@ -10,7 +10,7 @@ public class ProposalFormatUtil {
 	private static Pattern NUMBER_PATTERN = Pattern.compile("(^[0-9]*)");
 	private static Pattern DESCRIPTION_PATTERN = Pattern.compile("(^[a-zA-Z-\\s]*)");
 	
-	private static Integer LIGHTNING_DURATION = 5;
+	private static Long LIGHTNING_DURATION = 5L;
 	
 	public static final String giveProposalDescription(String proposal) {
 		return Arrays.asList(DESCRIPTION_PATTERN.matcher(proposal))
@@ -21,7 +21,7 @@ public class ProposalFormatUtil {
 				.get();
 	}
 	
-	public static final Integer giveProposalDuration(String proposal) {
+	public static final Long giveProposalDuration(String proposal) {
 		return Arrays.asList(NUMBER_PATTERN.matcher(giveDurationValue(proposal)))
 				.parallelStream()
 				.filter(matcher -> matcher.find())
@@ -40,10 +40,10 @@ public class ProposalFormatUtil {
 				.get();
 	}
 	
-	private static Integer parseDurationValue(String value) {
-		Integer parseValue;		
+	private static Long parseDurationValue(String value) {
+		Long parseValue;		
 		try {
-			parseValue = Integer.valueOf(value);
+			parseValue = Long.valueOf(value);
 		} catch (NumberFormatException exception) {
 			parseValue = LIGHTNING_DURATION;
 		}
