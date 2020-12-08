@@ -10,14 +10,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
 import com.fisagrop.conferenceTrackManagement.service.TrackManagement;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 public class TrackManagementTests {
+	
+	@Autowired
+    private MockMvc mockMvc;
 	
 	private static final String PROPOSALS_FILE_PATH = 	"src"
 														.concat(File.separator)
@@ -52,7 +59,6 @@ public class TrackManagementTests {
 	@Test
 	public void testCreatedTruckManagement() {
 		this.givenTruckManagementWithProposals();
-		this.givenTrucks();
 		System.out.println(this.trackManagement.getTrucks());
 		assertNotNull(this.trackManagement);
 		assertNotNull(this.trackManagement.getTrucks());
@@ -61,11 +67,5 @@ public class TrackManagementTests {
 	
 	private void givenTruckManagementWithProposals() {
 		this.trackManagement = new TrackManagement(this.proposals);
-	}
-	
-	private void givenTrucks() {
-		while(this.trackManagement.canCreateTrack()) {
-			this.trackManagement.createTrack();
-		}
 	}
 }

@@ -10,18 +10,32 @@ public class TrackManagement {
 	private SessionTrackManagement sessionTrackManagement;
 	
 	private List<Track> trucks;
-
-	public TrackManagement(List<String> proposals) {
-		this.sessionTrackManagement = new SessionTrackManagement(proposals);
+	
+	private TrackManagement() {
+		super();
 		this.trucks = new ArrayList<>();
 	}
+	
+	public TrackManagement(List<String> proposals) {
+		this();
+		this.sessionTrackManagement = new SessionTrackManagement(proposals);
+		this.createTracks();
+	}
 
-	public void createTrack() {
-		if (this.canCreateTrack()) {
-			Track track = new Track();
+	private void createTracks() {
+		while (this.canCreateTrack()) {
+			Track track = this.generateNewTrack();
 			this.sessionTrackManagement.generateSessionTracksFor(track);
-			this.trucks.add(track);
+			this.add(track);
 		}
+	}
+	
+	private Track generateNewTrack() {
+		return new Track();
+	}
+	
+	private void add(Track track) {
+		this.trucks.add(track);
 	}
 
 	public List<Track> getTrucks() {

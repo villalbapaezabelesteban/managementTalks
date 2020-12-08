@@ -10,11 +10,20 @@ public class SessionTrack {
 	private LocalTime start;
 	private LocalTime end;
 	private List<Talk> talks;
-
+	
+	public SessionTrack() {
+		super();
+		this.talks = new ArrayList<>();
+	}
+	
 	public SessionTrack(LocalTime start, LocalTime end) {
+		this();
 		this.start = start;
 		this.end = end;
-		this.talks = new ArrayList<>();
+	}
+
+	public List<Talk> getTalks() {
+		return talks;
 	}
 
 	public void addTalk(Talk talk) {

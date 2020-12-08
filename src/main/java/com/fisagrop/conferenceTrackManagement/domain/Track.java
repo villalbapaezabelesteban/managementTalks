@@ -8,7 +8,12 @@ public class Track {
 	private List<SessionTrack> sessionTracks;
 	
 	public Track() {
+		super();
 		this.sessionTracks = new ArrayList<>();
+	}
+
+	public List<SessionTrack> getSessionTracks() {
+		return sessionTracks;
 	}
 
 	public void addSessionTracks(List<SessionTrack> sessionTracks) {
